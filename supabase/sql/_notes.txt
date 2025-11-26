@@ -1,0 +1,4 @@
+Notes:
+- For production, tighten policies by checking auth.uid() against objects.metadata and tracks.user_id.
+- Consider triggers to keep plays/likes consistent across related tables if you add relations later.
+- Ensure the `anon` role can select from tracks if your frontend is public.
