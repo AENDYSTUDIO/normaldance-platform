@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+
 import { GenreTileSkeleton } from '../components/Skeleton';
 
 const CATEGORIES = [

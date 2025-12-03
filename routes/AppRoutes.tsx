@@ -1,5 +1,6 @@
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+
 import { useAuthStore } from '../stores/useAuthStore';
 import { Layout } from '../components/Layout';
 
@@ -15,6 +16,8 @@ const Staking = lazy(() => import('../pages/Staking').then(m => ({ default: m.St
 const Statistics = lazy(() => import('../pages/Statistics').then(m => ({ default: m.Statistics })));
 const GRave = lazy(() => import('../pages/GRave').then(m => ({ default: m.GRave })));
 const Settings = lazy(() => import('../pages/Settings').then(m => ({ default: m.Settings })));
+const Playlists = lazy(() => import('../pages/Playlists').then(m => ({ default: m.Playlists })));
+const Profile = lazy(() => import('../pages/Profile').then(m => ({ default: m.Profile })));
 const Auth = lazy(() => import('../pages/Auth').then(m => ({ default: m.Auth })));
 
 // Loading fallback component
@@ -35,14 +38,26 @@ const PageLoader = () => (
 );
 
 // Protected route wrapper
-import type React from 'react';
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const { isAuthenticated } = useAuthStore();
+    const { isAuthenticated, user, hasHydrated } = useAuthStore();
+
+    console.log('ProtectedRoute - hasHydrated:', hasHydrated(), 'isAuthenticated:', isAuthenticated, 'user:', user);
+
+    // Check if Zustand has hydrated
+    if (!hasHydrated()) {
+        return (
+            <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+                <div className="text-white">Loading...</div>
+            </div>
+        );
+    }
 
     if (!isAuthenticated) {
+        console.log('Not authenticated, redirecting to /auth');
         return <Navigate to="/auth" replace />;
     }
 
+    console.log('Authenticated, rendering children');
     return <>{children}</>;
 };
 
@@ -69,13 +84,16 @@ export const AppRoutes = () => {
                     <Route path="/trends" element={<Trends />} />
                     <Route path="/explore" element={<Explore />} />
                     <Route path="/library" element={<Library />} />
+                    <Route path="/playlists" element={<Playlists />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/upload" element={<Upload />} />
                     <Route path="/wallet" element={<Wallet />} />
                     <Route path="/nft" element={<NFT />} />
                     <Route path="/staking" element={<Staking />} />
                     <Route path="/statistics" element={<Statistics />} />
                     <Route path="/grave" element={<GRave />} />
-                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/settings" element={<Settings onLogout={() => {}} />} />
                 </Route>
 
                 {/* Fallback */}

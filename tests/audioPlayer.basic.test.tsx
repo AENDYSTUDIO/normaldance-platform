@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
 import { AudioPlayer } from '../components/AudioPlayer';
 import { usePlayerStore } from '../stores/usePlayerStore';
 import type { Track } from '../types';

@@ -3,9 +3,11 @@ import {
     Play, Pause, SkipForward, SkipBack, Volume2, VolumeX,
     Repeat, Repeat1, Shuffle, Heart
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import { usePlayerStore } from '../stores/usePlayerStore';
 import { useTracksStore } from '../stores/useTracksStore';
-import { motion, AnimatePresence } from 'framer-motion';
+import { springPresets, durationPresets } from './AnimatedMotion';
 
 export const PlayerBar: React.FC = () => {
     const {
@@ -126,7 +128,7 @@ export const PlayerBar: React.FC = () => {
                         <img
                             src={currentTrack.coverUrl}
                             alt="Cover"
-                            className="w-14 h-14 rounded-lg object-cover shadow-lg"
+                            className="w-14 h-14 rounded-2xl object-cover shadow-lg transition-transform hover:scale-105"
                         />
                         {currentTrack.isNft && (
                             <div className="absolute -top-1 -right-1 w-4 h-4 bg-violet-500 rounded-full border-2 border-dark-900 flex items-center justify-center">
@@ -154,7 +156,7 @@ export const PlayerBar: React.FC = () => {
                         {/* Shuffle */}
                         <button
                             onClick={toggleShuffle}
-                            className={`transition ${shuffle ? 'text-violet-400' : 'text-gray-400 hover:text-white'
+                            className={`p-2 rounded-xl transition-all duration-200 ${shuffle ? 'text-violet-400 bg-violet-400/10' : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             <Shuffle size={16} />
@@ -163,7 +165,7 @@ export const PlayerBar: React.FC = () => {
                         {/* Previous */}
                         <button
                             onClick={previous}
-                            className="text-gray-400 hover:text-white transition hover:scale-110"
+                            className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95"
                         >
                             <SkipBack size={20} />
                         </button>
@@ -171,19 +173,19 @@ export const PlayerBar: React.FC = () => {
                         {/* Play/Pause */}
                         <button
                             onClick={togglePlay}
-                            className="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center text-white hover:bg-violet-400 hover:scale-110 transition shadow-lg shadow-violet-500/30"
+                            className="w-12 h-12 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center text-white hover:from-violet-400 hover:to-purple-400 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-violet-500/30"
                         >
                             {isPlaying ? (
-                                <Pause size={20} fill="currentColor" />
+                                <Pause size={22} fill="currentColor" />
                             ) : (
-                                <Play size={20} fill="currentColor" className="ml-0.5" />
+                                <Play size={22} fill="currentColor" className="ml-0.5" />
                             )}
                         </button>
 
                         {/* Next */}
                         <button
                             onClick={next}
-                            className="text-gray-400 hover:text-white transition hover:scale-110"
+                            className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95"
                         >
                             <SkipForward size={20} />
                         </button>
@@ -191,7 +193,7 @@ export const PlayerBar: React.FC = () => {
                         {/* Repeat */}
                         <button
                             onClick={toggleRepeat}
-                            className={`transition ${repeat !== 'off' ? 'text-violet-400' : 'text-gray-400 hover:text-white'
+                            className={`p-2 rounded-xl transition-all duration-200 ${repeat !== 'off' ? 'text-violet-400 bg-violet-400/10' : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             {repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />}
@@ -208,14 +210,14 @@ export const PlayerBar: React.FC = () => {
                             onClick={handleSeekClick}
                             onMouseDown={handleSeekMouseDown}
                             onMouseUp={handleSeekMouseUp}
-                            className="h-1.5 flex-1 bg-white/10 rounded-full overflow-hidden cursor-pointer group relative"
+                            className="h-2 flex-1 bg-white/10 rounded-full overflow-hidden cursor-pointer group relative backdrop-blur-sm"
                         >
                             <div
-                                className="h-full bg-violet-500 rounded-full relative transition-all"
+                                className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full relative transition-all duration-300 ease-out"
                                 style={{ width: `${progress}%` }}
                             >
                                 <div
-                                    className={`absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition ${isDraggingSeek ? 'opacity-100 scale-125' : ''
+                                    className={`absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 ${isDraggingSeek ? 'opacity-100 scale-125 shadow-violet-500/50' : ''
                                         }`}
                                 />
                             </div>
@@ -228,7 +230,10 @@ export const PlayerBar: React.FC = () => {
 
                 {/* Volume Controls */}
                 <div className="flex items-center justify-end space-x-3 w-1/4">
-                    <button onClick={toggleMute} className="text-gray-400 hover:text-white transition">
+                    <button
+                        onClick={toggleMute}
+                        className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+                    >
                         {isMuted || volume === 0 ? (
                             <VolumeX size={18} />
                         ) : (
@@ -239,10 +244,10 @@ export const PlayerBar: React.FC = () => {
                         ref={volumeBarRef}
                         onClick={handleVolumeClick}
                         onMouseDown={() => setIsDraggingVolume(true)}
-                        className="w-24 h-1.5 bg-white/10 rounded-full cursor-pointer group relative"
+                        className="w-24 h-2 bg-white/10 rounded-full cursor-pointer group relative backdrop-blur-sm"
                     >
                         <div
-                            className="h-full bg-gray-400 rounded-full relative transition-all"
+                            className="h-full bg-gradient-to-r from-gray-400 to-gray-300 rounded-full relative transition-all duration-300 ease-out"
                             style={{ width: `${volume * 100}%` }}
                         >
                             <div

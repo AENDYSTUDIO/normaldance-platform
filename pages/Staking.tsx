@@ -1,5 +1,6 @@
 import React from 'react';
 import { Coins, Lock, TrendingUp } from 'lucide-react';
+
 import { MOCK_STAKING } from '../services/mockData';
 
 export const Staking: React.FC = () => {

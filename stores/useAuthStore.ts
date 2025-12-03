@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
 import { authService } from '../services/supabase';
 import { web3Service } from '../services/web3';
 
@@ -18,6 +19,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isWeb3Connected: boolean;
   isLoading: boolean;
+  _hasHydrated: boolean;
 
   // Traditional auth
   login: (user: User) => void;
@@ -33,6 +35,7 @@ interface AuthState {
   // Utility
   updateUser: (updates: Partial<User>) => void;
   checkAuth: () => Promise<void>;
+  hasHydrated: () => boolean;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -42,6 +45,7 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isWeb3Connected: false,
       isLoading: false,
+      _hasHydrated: false,
 
       // Traditional login
       login: (user) => set({ user, isAuthenticated: true }),
@@ -187,9 +191,20 @@ export const useAuthStore = create<AuthState>()(
           set({ isWeb3Connected: true });
         }
       },
+
+      hasHydrated: () => get()._hasHydrated,
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        console.log('Zustand rehydrating auth store');
+        if (state) {
+          // Ensure isAuthenticated is properly set after rehydration
+          state.isAuthenticated = !!state.user;
+          state._hasHydrated = true;
+          console.log('Auth store hydrated, isAuthenticated:', state.isAuthenticated, 'user:', state.user);
+        }
+      },
     }
   )
 );

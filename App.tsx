@@ -1,18 +1,33 @@
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+
 import { AudioPlayer } from './components/AudioPlayer';
 import { AppRoutes } from './routes/AppRoutes';
 import { useTracksStore } from './stores/useTracksStore';
+import { useAuthStore } from './stores/useAuthStore';
 import { Toaster } from './components/Toaster';
+import { performanceMonitor } from './services/performance';
 
 const App = () => {
   const { loadTracks } = useTracksStore();
+  const { checkAuth } = useAuthStore();
 
   // Initialize data on app mount
   useEffect(() => {
+    // Check authentication status first
+    checkAuth().then(() => {
+      console.log('App - checkAuth completed');
+    });
+    // Load tracks
     loadTracks();
-  }, [loadTracks]);
+    // Initialize performance monitoring
+    if (typeof window !== 'undefined') {
+      import('./services/performance').then(() => {
+        console.log('Performance monitoring initialized');
+      });
+    }
+  }, [loadTracks, checkAuth]);
 
   // Prefetch popular routes when idle
   useEffect(() => {

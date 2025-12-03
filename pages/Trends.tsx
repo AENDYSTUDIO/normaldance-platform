@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { TrendingUp, Play } from 'lucide-react';
+
 import { useTracksStore } from '../stores/useTracksStore';
 import { usePlayerStore } from '../stores/usePlayerStore';
 import { SEO } from '../components/SEO';

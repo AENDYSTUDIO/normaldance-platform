@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ShoppingBag, Filter } from 'lucide-react';
+
 import { useTracksStore } from '../stores/useTracksStore';
 import { SEO } from '../components/SEO';
 

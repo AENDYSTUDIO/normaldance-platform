@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+
 import { TREND_DATA } from '../services/mockData';
 
 const RechartsLazy = React.lazy(() => import('./_lazy/RechartsAreaBar'));

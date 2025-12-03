@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+
 import { Track } from '../types';
 
 // Initialize Supabase client (graceful fallback if env not set)
@@ -53,7 +54,7 @@ export const tracksService = {
             return [];
         }
 
-        return data.map(track => ({
+        return data.map((track: any) => ({
             id: track.id,
             title: track.title,
             artist: track.artist,
@@ -215,7 +216,7 @@ export const authService = {
     // Listen to auth state changes
     onAuthStateChange(callback: (user: any) => void) {
         if (!supabase) return { data: null, error: null } as any;
-        return supabase.auth.onAuthStateChange((event, session) => {
+        return supabase.auth.onAuthStateChange((event: any, session: any) => {
             callback(session?.user || null);
         });
     },

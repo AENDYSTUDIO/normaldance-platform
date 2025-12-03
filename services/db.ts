@@ -1,7 +1,8 @@
 
 import { Track } from '../types';
-import { MOCK_TRACKS } from './mockData';
 import { isBrowser } from '../utils/helpers';
+
+import { MOCK_TRACKS } from './mockData';
 
 const DB_KEY = 'normaldance_db_tracks';
 

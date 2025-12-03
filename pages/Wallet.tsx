@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wallet as WalletIcon, ArrowUpRight, ArrowDownLeft, CreditCard, History } from 'lucide-react';
+
 import { MOCK_BALANCES } from '../services/mockData';
 
 export const Wallet: React.FC = () => {

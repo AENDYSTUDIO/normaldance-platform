@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+
 import { formatTime, shortenAddress, formatNumber, generateId, clamp, debounce, isBrowser, formatFileSize, getQueryParams } from '../utils/helpers';
 
 describe('utils/helpers', () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet, Sparkles, Music, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+
 import { useAuthStore } from '../stores/useAuthStore';
 import { SEO } from '../components/SEO';
 
@@ -50,18 +51,18 @@ export const Auth: React.FC = () => {
           <div className="space-y-4">
             <button
               onClick={handleLogin}
-              className="w-full py-4 px-6 bg-white text-black rounded-xl font-bold text-lg hover:bg-gray-200 transition flex items-center justify-between group shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
+              className="w-full py-4 px-6 bg-gradient-to-r from-white to-gray-100 text-black rounded-2xl font-bold text-lg hover:from-gray-100 hover:to-gray-200 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-between group shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
             >
               <div className="flex items-center space-x-3">
                 <Wallet className="w-6 h-6" />
                 <span>Connect Wallet</span>
               </div>
-              <ArrowRight size={20} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              <ArrowRight size={20} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </button>
 
             <button
               onClick={handleLogin}
-              className="w-full py-4 px-6 bg-[#229ED9]/10 border border-[#229ED9]/30 text-[#229ED9] rounded-xl font-bold text-lg hover:bg-[#229ED9]/20 transition flex items-center justify-center space-x-3"
+              className="w-full py-4 px-6 bg-gradient-to-r from-[#229ED9]/10 to-[#229ED9]/5 border border-[#229ED9]/30 text-[#229ED9] rounded-2xl font-bold text-lg hover:from-[#229ED9]/20 hover:to-[#229ED9]/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-3"
             >
               <Sparkles className="w-6 h-6" />
               <span>Telegram Login</span>
@@ -74,11 +75,11 @@ export const Auth: React.FC = () => {
             <div className="h-px bg-white/10 w-12"></div>
           </div>
 
-          <div className="mt-6 flex justify-center space-x-4 opacity-50 grayscale hover:grayscale-0 transition duration-500">
+          <div className="mt-6 flex justify-center space-x-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
             {/* Mock chain icons */}
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[10px]">ETH</div>
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[10px]">SOL</div>
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[10px]">TON</div>
+            <div className="w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:scale-110">ETH</div>
+            <div className="w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:scale-110">SOL</div>
+            <div className="w-10 h-10 rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:scale-110">TON</div>
           </div>
         </motion.div>
 

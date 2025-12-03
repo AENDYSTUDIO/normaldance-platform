@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useToastStore } from '../stores/useToastStore';
 
 const typeClasses: Record<string, string> = {
@@ -12,14 +13,17 @@ export const Toaster: React.FC = () => {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed top-4 right-4 z-[9999] space-y-2">
+    <div className="fixed top-4 right-4 z-[9999] space-y-3">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`glass-panel px-4 py-3 rounded-xl border ${typeClasses[t.type || 'info']} shadow-lg max-w-xs flex items-start space-x-3`}
+          className={`glass-panel px-5 py-4 rounded-2xl border ${typeClasses[t.type || 'info']} shadow-xl max-w-sm flex items-start space-x-3 backdrop-blur-xl transform transition-all duration-300 hover:scale-[1.02]`}
         >
           <div className="flex-1 text-sm leading-snug">{t.message}</div>
-          <button className="text-xs opacity-60 hover:opacity-100" onClick={() => removeToast(t.id)}>
+          <button
+            className="text-xs opacity-60 hover:opacity-100 transition-opacity duration-200 p-1 rounded-lg hover:bg-white/10"
+            onClick={() => removeToast(t.id)}
+          >
             ✕
           </button>
         </div>

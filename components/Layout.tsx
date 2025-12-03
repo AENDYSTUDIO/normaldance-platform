@@ -3,11 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, TrendingUp, Compass, Library, UploadCloud,
   Wallet, Disc, Coins, BarChart2, Skull, Settings,
-  Menu, X
+  Menu, X, ListMusic, Users, Bug, Activity, Terminal
 } from 'lucide-react';
-import { LazyMotionDiv, LazyAnimatePresence } from './LazyMotion';
-import { PlayerBar } from './PlayerBar';
+
 import { usePlayerStore } from '../stores/usePlayerStore';
+
+import { LazyAnimatePresence, LazyMotionDiv, variants, springPresets } from './AnimatedMotion';
+import { PlayerBar } from './PlayerBar';
+import { PerformanceDashboard } from './PerformanceDashboard';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,8 +29,8 @@ const SidebarItem: React.FC<{
 }) => (
     <button
       onClick={onClick}
-      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${active
-          ? 'bg-violet-600/20 text-violet-400 border border-violet-500/20'
+      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition-all duration-300 ease-out group hover:scale-[1.02] active:scale-[0.98] ${active
+          ? 'bg-gradient-to-r from-violet-600/20 to-purple-600/20 text-violet-400 border border-violet-500/20 shadow-lg shadow-violet-500/10'
           : 'text-gray-400 hover:bg-white/5 hover:text-white'
         }`}
     >
@@ -53,6 +56,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     { path: '/trends', label: 'Trends', icon: TrendingUp },
     { path: '/explore', label: 'Explore', icon: Compass },
     { path: '/library', label: 'Library', icon: Library },
+    { path: '/playlists', label: 'Playlists', icon: ListMusic },
+    { path: '/profile', label: 'Profile', icon: Users },
     { path: '/upload', label: 'Upload', icon: UploadCloud },
     { path: '/wallet', label: 'Wallet', icon: Wallet },
     { path: '/nft', label: 'NFT Market', icon: Disc },
@@ -115,7 +120,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <input
                 type="text"
                 placeholder="Search artists, tracks, or NFTs..."
-                className="bg-white/5 border border-white/10 rounded-full px-5 py-2 text-sm text-white focus:outline-none focus:border-violet-500/50 w-80 transition"
+                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5 text-sm text-white focus:outline-none focus:border-violet-500/50 w-80 transition-all duration-300 focus:scale-[1.02] focus:bg-white/8 placeholder-gray-500"
               />
             </div>
           </div>
@@ -154,6 +159,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         )}
       </main>
+
+      {/* Performance Dashboard */}
+      <PerformanceDashboard />
     </div>
   );
 };

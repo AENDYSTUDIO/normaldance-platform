@@ -1,6 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { UploadCloud, Music, X, CheckCircle2, Loader2, Image as ImageIcon } from 'lucide-react';
+
 import { Track } from '../types';
 // Defer heavy services to interaction-time to reduce initial bundle size
 // import { ipfsService } from '../services/ipfs';

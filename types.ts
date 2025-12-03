@@ -43,3 +43,6 @@ export interface StakingPosition {
   lockedUntil: string;
   rewardsEarned: number;
 }
+
+// Re-export social types
+export * from './types/social';

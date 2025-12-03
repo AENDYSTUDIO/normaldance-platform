@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Play, Heart } from 'lucide-react';
+
 import { Track } from '../types';
 import { useTracksStore } from '../stores/useTracksStore';
 import { usePlayerStore } from '../stores/usePlayerStore';
@@ -86,17 +87,17 @@ export const Feed: React.FC = () => {
 };
 
 const TrackCard: React.FC<{ track: Track; onPlay: () => void }> = ({ track, onPlay }) => (
-  <div className="glass-panel p-4 rounded-2xl hover:bg-white/5 transition group">
-    <div className="relative aspect-square rounded-xl overflow-hidden mb-4">
-      <img src={track.coverUrl} alt={track.title} loading="lazy" className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center space-x-4">
+  <div className="glass-panel p-4 rounded-3xl hover:bg-white/5 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 group cursor-pointer">
+    <div className="relative aspect-square rounded-2xl overflow-hidden mb-4">
+      <img src={track.coverUrl} alt={track.title} loading="lazy" className="w-full h-full object-cover transition duration-300 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center space-x-4 backdrop-blur-sm">
         <button
           onClick={(e) => { e.stopPropagation(); onPlay(); }}
-          className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition"
+          className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-xl"
         >
-          <Play size={20} fill="currentColor" className="ml-1" />
+          <Play size={22} fill="currentColor" className="ml-1" />
         </button>
-        <button className="w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition backdrop-blur-sm">
+        <button className="w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-all duration-200 backdrop-blur-md hover:scale-110">
           <Heart size={20} />
         </button>
       </div>
