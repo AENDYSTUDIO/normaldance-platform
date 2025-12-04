@@ -1,7 +1,10 @@
 import { ethers } from 'ethers';
-import { enhancedWeb3Service, TransactionProgress, ProgressCallback } from './enhancedWeb3Service';
+import { enhancedWeb3Service, ProgressCallback } from './enhancedWeb3Service';
 import { uploadToIPFS } from './ipfs';
 import { useToastStore } from '../stores/useToastStore';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { TransactionProgress } from './enhancedWeb3Service';
 
 // Type definitions for contract interactions
 export interface NFTMetadata {
@@ -396,7 +399,18 @@ class ContractService {
       try {
         const positions = await contract.getUserStakingPositions(address);
 
-        return positions.map((pos: any) => ({
+        return positions.map((pos: {
+          positionId: string | number;
+          amount: string | number;
+          lockPeriodSeconds: string | number;
+          startTime: string | number;
+          endTime: string | number;
+          totalRewards: string | number;
+          rewardRate: string | number;
+          isActive: boolean;
+          isEarlyWithdrawalPenalty: boolean;
+          earlyWithdrawalPenalty: string | number;
+        }) => ({
           positionId: Number(pos.positionId),
           amount: ethers.formatEther(pos.amount),
           lockPeriod: Number(pos.lockPeriodSeconds),
@@ -464,7 +478,8 @@ class ContractService {
   /**
    * Generate NFT metadata for IPFS upload
    */
-  generateNFTMetadata(audioFile: File, coverImage: File, metadata: NFTMetadata): any {
+  generateNFTMetadata(audioFile: File, coverImage: File, metadata: NFTMetadata): {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return {
       name: metadata.title,
       description: `Music NFT by ${metadata.artist}`,
@@ -528,11 +543,14 @@ class ContractService {
         type: 'application/json',
       });
 
-      const metadataResult = await uploadToIPFS(metadataFile);
+      await uploadToIPFS(metadataFile);
 
       // Update metadata with IPFS hash
       metadata.audioHash = metadataJSON.audio.ipfs_hash;
       metadata.coverHash = metadataJSON.image.ipfs_hash;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const metadataResult = await uploadToIPFS(metadataFile);
 
       // Mint the NFT
       return await this.mintMusicNFT(metadata, options);

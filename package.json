@@ -30,6 +30,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/node": "^22.14.0",
@@ -45,6 +46,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "hardhat": "^3.0.17",
     "husky": "^9.1.6",
     "jsdom": "^26.0.0",
     "lint-staged": "^15.2.10",

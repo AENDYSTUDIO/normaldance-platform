@@ -62,6 +62,7 @@ export const CONTRACT_ADDRESSES = {
 };
 
 // Contract ABIs - will be loaded dynamically
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CONTRACT_ABIS: Record<string, any[]> = {
   MusicNFT: [],
   Platform: [],
@@ -164,13 +165,15 @@ class EnhancedWeb3Service {
       const signer = await provider.getSigner();
       const network = await provider.getNetwork();
       const address = await signer.getAddress();
-      const balance = await provider.getBalance(address);
 
       // Store provider and signer
       this.providers.set('metamask', provider);
       this.signers.set('metamask', signer);
       this.currentWallet = 'metamask';
       this.currentChainId = Number(network.chainId);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const ethBalance = await provider.getBalance(address);
 
       // Initialize contracts for this network
       await this.initializeContracts(Number(network.chainId));
@@ -298,7 +301,7 @@ class EnhancedWeb3Service {
     this.eventListeners.get(contractName)!.push(contract);
 
     // Example event listeners (to be customized based on contract events)
-    contract.on('*', (event: any) => {
+    contract.on('*', (event: ethers.EventLog) => {
       console.log(`${contractName} event:`, event);
     });
   }
@@ -530,6 +533,7 @@ class EnhancedWeb3Service {
   subscribeToContractEvents(
     contract: string,
     eventName: string,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     callback: Function
   ): void {
     const contractInstance = this.contracts.get(contract);

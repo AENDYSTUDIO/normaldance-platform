@@ -32,5 +32,5 @@ module.exports = {
     'react/prop-types': 'off',
     'import/order': ['error', { 'newlines-between': 'always' }],
   },
-  ignorePatterns: ['dist', 'node_modules'],
+  ignorePatterns: ['dist', 'node_modules', 'contracts/**', 'contracts-hardhat/**', 'hardhat.config.js'],
 };
